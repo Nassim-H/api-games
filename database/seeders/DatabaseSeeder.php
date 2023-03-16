@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Database\Factories\CategorieFactory;
+use Database\Factories\CategoriesFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(CategorieSeeder::class);
-        $this->call(EditeurSeeder::class);
+        $this->call(CategoriesSeeder::class);
+        $this->call(EditeursSeeder::class);
         $this->call(ThemeSeeder::class);
         $this->call(JeuSeeder::class);
         $this->call(AchatSeeder::class);

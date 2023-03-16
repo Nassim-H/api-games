@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jeu', function (Blueprint $table) {
+        Schema::create('jeus', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->string('description');
@@ -21,13 +21,13 @@ return new class extends Migration
             $table->integer('nombre_joueurs_min');
             $table->integer('nombre_joueurs_max');
             $table->boolean('valide')->default(true);
-            $table->foreignId('categorie_id')->references('id')->on('categorie')
+            $table->foreignId('categorie_id')->references('id')->on('categories')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('theme_id')->references('id')->on('theme')
+            $table->foreignId('theme_id')->references('id')->on('themes')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('editeur_id')->references('id')->on('editeur')
+            $table->foreignId('editeur_id')->references('id')->on('editeurs')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->timestamps();
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jeu');
+        Schema::dropIfExists('jeus');
     }
 };

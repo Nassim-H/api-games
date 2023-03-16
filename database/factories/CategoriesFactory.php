@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class CategorieFactory extends Factory
+class CategoriesFactory extends Factory
 {
     const CATEGORIES = ['CATEGORIE1','CATEGORIE2','CATEGORIE3','CATEGORIE4','CATEGORIE5','CATEGORIE6'];
     /**

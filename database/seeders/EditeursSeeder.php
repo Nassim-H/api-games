@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Editeur;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EditeurSeeder extends Seeder
+class EditeursSeeder extends Seeder
 {
     /**
      * Run the database seeds.

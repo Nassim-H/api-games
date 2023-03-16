@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('role_user', function (Blueprint $table) {
+        Schema::create('role_users', function (Blueprint $table) {
             $table->primary(['user_id', 'role_id']);
-            $table->foreignId('user_id')->references('id')->on('user')
+            $table->foreignId('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('role_id')->references('id')->on('role')
+            $table->foreignId('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->timestamps();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('role_users');
     }
 };
