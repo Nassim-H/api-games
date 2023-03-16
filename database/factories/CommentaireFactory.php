@@ -20,6 +20,7 @@ class CommentaireFactory extends Factory
             'user_id'=>$this->faker->numberBetween(1,10),
             'jeu_id'=>$this->faker->numberBetween(1,10),
             'note'=>$this->faker->numberBetween(0,20),
+            'commentaire'=>substr($this->faker->words(20, true), 0, 50),
         ];
     }
 }
