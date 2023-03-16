@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AdherentResource;
+use App\Models\Adherent;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class AdherentController extends FormRequest
+class AdherentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $adherents = User::all();
+        return AdherentResource::collection($adherents);
     }
 
     /**
@@ -21,15 +26,15 @@ class AdherentController extends FormRequest
      */
     public function store(Request $request)
     {
-        $adherent = new Adherent();
-        $adherent->login = $request->login;
+        $adherent = new User();
         $adherent->email = $request->email;
-        $adherent->password = $request->password;
+        $adherent->password = Hash::make($request->password);
         $adherent->valide = true;
         $adherent->nom = $request->nom;
         $adherent->prenom = $request->prenom;
         $adherent->pseudo = $request->pseudo;
         $adherent->avatar = '../../../../resources/images/avatar1.png';
+        $adherent->save();
         return response()->json([
             "status" => "success",
             "message" => "Adherent created successfully",
@@ -46,7 +51,8 @@ class AdherentController extends FormRequest
      */
     public function show(string $id)
     {
-        //
+        $adherent= User::findOrFail($id);
+        return new AdherentResource($adherent);
     }
 
     /**

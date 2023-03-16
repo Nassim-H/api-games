@@ -26,10 +26,10 @@ class AuthController extends Controller
                 'message' => 'Unauthorized',
             ], 401);
         }
-
         $user = Auth::user();
         return response()->json([
             'status' => 'success',
+            "message" => "Adherent logged successfully",
             'user' => $user,
             'authorisation' => [
                 'token' => $token,
