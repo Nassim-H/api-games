@@ -124,4 +124,14 @@ class JeuController extends Controller
         $achat->jeux_id= $id;
         $achat->save();
     }
+
+    public function details(string $id)
+    {
+        $jeu = Jeu::findOrFail($id);
+        $achat = Achat::where('jeu_id', $id)->first();
+        $commentaire = Commentaire::where('jeu_id', $id)->first();
+        $nb_likes = Like::where('jeu_id', $id)->first();
+        return new JeuResource($jeu);
+
+    }
 }
