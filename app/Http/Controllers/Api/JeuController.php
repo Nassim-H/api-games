@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JeuRequest;
 use App\Http\Resources\JeuResource;
+use App\Models\Categories;
+use App\Models\Editeur;
 use App\Models\Jeu;
+use App\Models\Theme;
 use Illuminate\Http\Request;
 
 class JeuController extends Controller
@@ -26,6 +29,9 @@ class JeuController extends Controller
     {
         // Ici les données ont été validées dans la classe JeuRequest
         $jeu = new Jeu();
+        $editeur = Editeur::where('nom', $request->editeur)->first();
+        $theme = Theme::where('nom', $request->theme)->first();
+        $categorie = Categories::where('nom', $request->categorie)->first();
         $jeu->nom = $request->nom;
         $jeu->description = $request->description;
         $jeu->langue = $request->langue;
@@ -33,13 +39,13 @@ class JeuController extends Controller
         $jeu->nombre_joueurs_min = $request->nombre_joueurs_min;
         $jeu->nombre_joueurs_max = $request->nombre_joueurs_max;
         $jeu->duree_partie = $request->duree_partie;
-        $jeu->categorie = $request->categorie;
-        $jeu->theme = $request->theme;
-        $jeu->editeur = $request->editeur;
+        $jeu->categorie_id  = $categorie->id;
+        $jeu->theme_id  = $theme->id;
+        $jeu->editeur_id  = $editeur->id;
         $jeu->url_media = "url_a_mettre";
         $jeu->save();
         return response()->json([
-            'status' => true,
+            'status' => "success",
             'message' => "Game Created successfully!",
             'jeu' => $jeu], 200);
     }
@@ -59,6 +65,9 @@ class JeuController extends Controller
      */
     public function update(JeuRequest $request, int $id) {
         $jeu = Jeu::findOrFail($id);
+        $editeur = Editeur::where('nom', $request->editeur)->first();
+        $theme = Theme::where('nom', $request->theme)->first();
+        $categorie = Categories::where('nom', $request->categorie)->first();
         $jeu->nom = $request->nom;
         $jeu->description = $request->description;
         $jeu->langue = $request->langue;
@@ -66,13 +75,13 @@ class JeuController extends Controller
         $jeu->nombre_joueurs_min = $request->nombre_joueurs_min;
         $jeu->nombre_joueurs_max = $request->nombre_joueurs_max;
         $jeu->duree_partie = $request->duree_partie;
-        $jeu->categorie = $request->categorie;
-        $jeu->theme = $request->theme;
-        $jeu->editeur = $request->editeur;
+        $jeu->categorie_id  = $categorie->id;
+        $jeu->theme_id  = $theme->id;
+        $jeu->editeur_id  = $editeur->id;
         $jeu->url_media = "url_a_mettre";
         $jeu->save();
         return response()->json([
-            'status' => true,
+            'status' => "success",
             'message' => "Game Updated successfully!",
             'jeu' => $jeu
         ], 200);
@@ -82,11 +91,11 @@ class JeuController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateUrl(JeuRequest $request, int $id) {
+    public function updateUrl(Request $request, int $id) {
         $jeu = Jeu::findOrFail($id);
-        $jeu->update($request->attributes(url_media()));
+        $jeu->url_media = $request->url_media;
         return response()->json([
-            'status' => true,
+            'status' => "success",
             'message' => "Game url updated successfully!",
             'jeu' => $jeu], 200);
     }

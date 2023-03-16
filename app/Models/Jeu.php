@@ -18,4 +18,8 @@ class Jeu extends Model
     function commentaires(){
         return $this->hasMany(Commentaire::class);
     }
+
+    function categories(){
+        return $this->belongsTo(Categories::class);
+    }
 }

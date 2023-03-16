@@ -22,8 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('jeux', JeuController::class);
 
 
-
-
 Route::prefix('jeux')->group(function () {
     Route::get('/', [JeuController::class, 'index'])
         ->name('jeux.index ');
@@ -35,6 +33,8 @@ Route::prefix('jeux')->group(function () {
         ->name('jeux.update');
     Route::post('/{id}', [JeuController::class, 'update'])
         ->name('jeux.store');
+    Route::post('/url/{id}', [JeuController::class, 'updateUrl'])
+        ->name('jeux.updateUrl');
     Route::delete('/{id}', [JeuController::class, 'destroy'])
         ->middleware(['auth', 'role:admin'])
         ->name('jeux.destroy');
