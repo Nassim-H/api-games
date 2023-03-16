@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('commentaires', function (Blueprint $table) {
-            $table->primary(['user_id', 'jeu_id']);
-            $table->foreignId('user_id')->references('id')->on('users')
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('jeu_id');
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('jeu_id')->references('id')->on('jeus')
+            $table->foreign('jeu_id')->references('id')->on('jeus')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('commentaire');
