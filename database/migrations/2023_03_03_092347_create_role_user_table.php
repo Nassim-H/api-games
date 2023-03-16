@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('role_user', function (Blueprint $table) {
             $table->primary(['user_id', 'role_id']);
-            $table->foreignIdFor(User::class)->constrained()
+            $table->foreignId('user_id')->references('id')->on('user')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignIdFor(Role::class)->constrained()
+            $table->foreignId('role_id')->references('id')->on('role')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->timestamps();
