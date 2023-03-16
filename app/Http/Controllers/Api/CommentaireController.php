@@ -44,13 +44,7 @@ class CommentaireController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $commentaire = Commentaire::findOrFail($id);
-        $commentaire->update($request->all());
-        return response()->json([
-            'status' => "success",
-            'message' => "Comment updated successfully!",
-            'comment' => $commentaire
-        ], 200);
+        //
     }
 
     /**
@@ -58,11 +52,6 @@ class CommentaireController extends Controller
      */
     public function destroy(string $id)
     {
-        $commentaire = Commentaire::findOrFail($id);
-        $commentaire->delete();
-        return response()->json([
-            'status' => "success",
-            'message' => "Comment successfully deleted",
-        ], 200);
+        //
     }
 }
