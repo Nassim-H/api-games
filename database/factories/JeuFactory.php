@@ -23,6 +23,7 @@ class JeuFactory extends Factory
             'langue' => $this->faker->country(),
             'url_media' => substr($this->faker->words(1, true), 0, 50),
             'age_min'=> $this->faker->numberBetween(3,18),
+            'duree_partie'=>$this->faker->numberBetween(1,10000),
             'nombre_joueurs_min'=>$this->faker->numberBetween(1,5),
             'nombre_joueurs_max'=>$this->faker->numberBetween(2,20),
             'categorie_id'=>$this->faker->numberBetween(1,10),
