@@ -3,13 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AchatRequest;
 use App\Http\Requests\JeuRequest;
 use App\Http\Resources\JeuResource;
+use App\Models\Achat;
 use App\Models\Categories;
+use App\Models\Commentaire;
 use App\Models\Editeur;
 use App\Models\Jeu;
+use App\Models\Like;
 use App\Models\Theme;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JeuController extends Controller
 {
@@ -106,5 +112,16 @@ class JeuController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function achat(AchatRequest $request, int $id)
+    {
+        $achat = new Achat();
+        $achat->date_achat = $request->date_achat;
+        $achat->lieu_achat = $request->lieu_achat;
+        $achat->prix = $request->prix;
+        $achat->adherent_id = Auth::user()->$id;
+        $achat->jeux_id= $id;
+        $achat->save();
     }
 }

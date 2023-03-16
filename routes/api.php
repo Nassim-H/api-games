@@ -38,4 +38,6 @@ Route::prefix('jeux')->group(function () {
     Route::delete('/{id}', [JeuController::class, 'destroy'])
         ->middleware(['auth', 'role:admin'])
         ->name('jeux.destroy');
+    Route::post('/achat/{id}',[JeuController::class,'achat'])
+        ->name('jeux.achat');
 });
