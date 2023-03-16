@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('jeux', JeuController::class);
 
 
+
+
 Route::prefix('jeux')->group(function () {
     Route::get('/', [JeuController::class, 'index'])
         ->name('jeux.index ');
