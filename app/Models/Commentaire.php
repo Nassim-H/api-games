@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Theme extends Model
+class Commentaire extends Model
 {
     use HasFactory;
-    protected $fillable = ['nom'];
 
-    function jeux(){
-        return $this->hasMany(Jeu::class);
-    }
+    protected $fillable = ['commentaire','date_com','note','etat'];
+
 }

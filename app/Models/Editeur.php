@@ -9,6 +9,7 @@ class Editeur extends Model
 {
     use HasFactory;
     protected $fillable = ['nom'];
+
     function jeux(){
         return $this->hasMany(Jeu::class);
     }
