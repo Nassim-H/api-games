@@ -21,13 +21,13 @@ return new class extends Migration
             $table->integer('nombre_joueurs_min');
             $table->integer('nombre_joueurs_max');
             $table->boolean('valide')->default(true);
-            $table->foreign('categorie_id')->references('id')->on('categorie')
+            $table->foreignId('categorie_id')->references('id')->on('categorie')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('theme_id')->references('id')->on('theme')
+            $table->foreignId('theme_id')->references('id')->on('theme')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('editeur_id')->references('id')->on('editeur')
+            $table->foreignId('editeur_id')->references('id')->on('editeur')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->timestamps();

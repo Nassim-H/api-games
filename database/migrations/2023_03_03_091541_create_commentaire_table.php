@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('commentaire', function (Blueprint $table) {
             $table->primary(['user_id', 'jeu_id']);
-            $table->foreign('user_id')->references('id')->on('user')
+            $table->foreignId('user_id')->references('id')->on('user')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('jeu_id')->references('id')->on('jeu')
+            $table->foreignId('jeu_id')->references('id')->on('jeu')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('commentaire');
