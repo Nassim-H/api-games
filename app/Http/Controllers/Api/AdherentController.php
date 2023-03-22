@@ -33,6 +33,7 @@ class AdherentController extends Controller
         $adherent->nom = $request->nom;
         $adherent->prenom = $request->prenom;
         $adherent->pseudo = $request->pseudo;
+        $adherent->email_verified_at = now();
         $adherent->avatar = '../../../../resources/images/avatar1.png';
         $adherent->save();
         return response()->json([
