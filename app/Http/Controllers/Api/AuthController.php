@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register','logout']]);
     }
 
     public function login(Request $request) {
@@ -39,6 +39,7 @@ class AuthController extends Controller
     }
 
     public function logout() {
+        echo(7);
         Auth::logout();
         return response()->json([
             'status' => 'success',
