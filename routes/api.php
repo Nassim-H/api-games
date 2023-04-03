@@ -24,23 +24,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('adherents', [AdherentController::class, 'store']);
 Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(function(){
+    Route::post('register','register');
     Route::post('login','login');
     Route::post('logout','logout');
     Route::get('me','me');
 });
 
-
-
 Route::apiResource('jeux', JeuController::class);
-
-
-
-
 Route::prefix('jeux')->group(function () {
     Route::get('/', [JeuController::class, 'index'])
         ->name('jeux.index ');
     Route::get('/{id}', [JeuController::class, 'show'])
-        ->middleware(['auth', 'role:view-salle'])
+        ->middleware(['auth'])
         ->name('jeux.show');
     Route::put('/', [JeuController::class, 'store'])
         ->middleware(['auth', 'role:edit-salle'])
