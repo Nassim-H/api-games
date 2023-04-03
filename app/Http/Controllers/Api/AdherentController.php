@@ -26,25 +26,6 @@ class AdherentController extends Controller
      */
     public function store(Request $request)
     {
-        $adherent = new User();
-        $adherent->email = $request->email;
-        $adherent->password = Hash::make($request->password);
-        $adherent->valide = true;
-        $adherent->nom = $request->nom;
-        $adherent->prenom = $request->prenom;
-        $adherent->pseudo = $request->pseudo;
-        $adherent->email_verified_at = now();
-        $adherent->avatar = '../../../../resources/images/avatar1.png';
-        $adherent->save();
-        return response()->json([
-            "status" => "success",
-            "message" => "Adherent created successfully",
-            "adherent" => $adherent,
-            "authorisation" => [
-                "token" => "valeur du token",
-                "type" => "bearer",
-            ]
-        ], 200);
     }
 
     /**
