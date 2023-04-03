@@ -24,7 +24,14 @@ class JeuController extends Controller
      */
     public function index()
     {
+        $this->authorize('adherent'&&'adherent-premium');
         $jeux = Jeu::all();
+        return JeuResource::collection($jeux);
+    }
+
+    public function randomIndex()
+    {
+        $jeux = Jeu::all()->random(10);
         return JeuResource::collection($jeux);
     }
 
@@ -120,18 +127,39 @@ class JeuController extends Controller
         $achat->date_achat = $request->date_achat;
         $achat->lieu_achat = $request->lieu_achat;
         $achat->prix = $request->prix;
-        $achat->adherent_id = Auth::user()->$id;
-        $achat->jeux_id= $id;
+        $achat->user_id = 1;//Auth::user()->$id;
+        $achat->jeu_id= $request->id_jeu;
         $achat->save();
+        return response()->json([
+            "status"=> "success",
+             "message"=> "Purchase created successfully",
+             "achat"=>$achat,
+             //"adherent" =>Auth::user()->$id,
+            ], 200);
+    }
+
+    public function destroyAchat(string $id)
+    {
+        $achat = Achat::findOrFail($id);
+        $achat->delete();
+        return response()->json([
+            "status"=> "success",
+            "message"=> "Purchase deleted successfully",
+            "achat"=>$achat,
+        ], 200);
     }
 
     public function details(string $id)
     {
         $jeu = Jeu::findOrFail($id);
-        $achat = Achat::where('jeu_id', $id)->first();
-        $commentaire = Commentaire::where('jeu_id', $id)->first();
-        $nb_likes = Like::where('jeu_id', $id)->first();
-        return new JeuResource($jeu);
+        return response()->json([
+            "status"=> "success",
+            "message"=>"Full info of game",
+            "achats"=> $jeu->achats,
+            "commentaires"=> $jeu->commentaires,
+            "jeu"=> $jeu,
+            "nb_likes"=> $jeu->likes->count(),
+        ], 200);
 
     }
 }

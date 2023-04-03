@@ -26,7 +26,7 @@ class JeuRequest extends FormRequest
         'age_min' => "required|numeric|between:5,65",
         'nombre_joueurs_min' => "required|numeric|between:1,100",
         'nombre_joueurs_max' => "required|numeric|between:1,100",
-        'duree_partie' => "required|numeric|between:5,65",
+        'duree_partie' => "required|numeric|between:5,9965",
         'categorie' => "required|string",
         'theme' => "required",
         'editeur' => "required",

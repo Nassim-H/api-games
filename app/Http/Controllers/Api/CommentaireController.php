@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Commentaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentaireController extends Controller
 {
@@ -18,12 +20,14 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, int $id)
     {
         $commentaire=new Commentaire();
         $commentaire->commentaire = $request->commentaire;
         $commentaire->note = $request->note;
         $commentaire->etat = "public";
+        $commentaire->jeux_id= $id;
+        //$commentaire->user_id = Auth::user()->$id;
         return response()->json([
             "status" => "success",
             "message" => "Comment created successfully",
