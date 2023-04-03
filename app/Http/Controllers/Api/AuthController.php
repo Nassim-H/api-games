@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register','logout']]);
     }
 
     public function login(Request $request) {
@@ -26,10 +26,10 @@ class AuthController extends Controller
                 'message' => 'Unauthorized',
             ], 401);
         }
-
         $user = Auth::user();
         return response()->json([
             'status' => 'success',
+            "message" => "Adherent logged successfully",
             'user' => $user,
             'authorisation' => [
                 'token' => $token,
@@ -39,6 +39,7 @@ class AuthController extends Controller
     }
 
     public function logout() {
+        echo(7);
         Auth::logout();
         return response()->json([
             'status' => 'success',
@@ -46,4 +47,10 @@ class AuthController extends Controller
         ]);
     }
 
+    public function me() {
+        return response()->json([
+            'status' => 'sucess',
+            'adhérent' => Auth::user(),
+        ]);
+    }
 }
