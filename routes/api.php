@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('adherents', [AdherentController::class, 'store']);
 Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(function(){
+    Route::post('register','register');
     Route::post('login','login');
     Route::post('logout','logout');
     Route::get('me','me');
@@ -32,60 +33,58 @@ Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(functi
 
 
 
-Route::apiResource('jeux', JeuController::class);
+Route::prefix('adherents')->group(function () {
+    Route::get('/{id}', [AdherentController::class, 'show'])
+        ->middleware(['him'])
+        ->name('adherents.show ');
+    Route::post('/{id}', [AdherentController::class, 'update'])
+        ->middleware(['him'])
+        ->name('adherents.update');
+    Route::put('/{id}', [AdherentController::class, 'updateAvatar'])
+        ->middleware(['him'])
+        ->name('adherents.update');
+});
+
 
 
 Route::prefix('jeux')->group(function () {
-    Route::get('/', [JeuController::class, 'randomIndex'])
+    Route::get('/random', [JeuController::class, 'randomIndex'])
         ->name('jeux.randomIndex');
-    Route::get('/', [JeuController::class, 'Index'])
+    Route::get('/jeux', [JeuController::class, 'index'])
+        ->middleware('auth')
         ->name('jeux.index ');
-    Route::get('/{id}', [JeuController::class, 'show'])
-        ->middleware(['auth', 'role:view-salle'])
-        ->name('jeux.show');
-    Route::get('/{id}', [JeuController::class, 'details'])
-        ->middleware(['auth', 'role:view-salle'])
-        ->name('jeux.details');
-    Route::put('/', [JeuController::class, 'store'])
-        ->middleware(['auth', 'role:edit-salle'])
-        ->name('jeux.update');
-    Route::post('/{id}', [JeuController::class, 'update'])
+    Route::post('/jeux', [JeuController::class, 'store'])
+        ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.store');
-    Route::post('/url/{id}', [JeuController::class, 'updateUrl'])
+    Route::post('/{id}', [JeuController::class, 'update'])
+        ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
+        ->name('jeux.update');
+    Route::post('/{id}', [JeuController::class, 'updateUrl'])
+        ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.updateUrl');
-    Route::delete('/{id}', [JeuController::class, 'destroy'])
-        ->middleware(['auth', 'role:admin'])
-        ->name('jeux.destroy');
-    Route::post('/achat/{id}',[JeuController::class,'destroyAchat'])
+    Route::post('/achat/{id}', [JeuController::class, 'achat'])
+        ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
+        ->name('jeux.achat');
+    Route::post('/achat/{id}', [JeuController::class, 'destroyAchat'])
+        ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.destroyAchat');
-    Route::post('/achat/{id}',[JeuController::class,'achat'])
-        ->name('jeux.achat');
-    Route::post('/commentaire/{id}',[CommentaireController::class,'store'])
-        ->name('jeux.commentaire');
-    Route::post('/commentaire/{id}',[CommentaireController::class,'update'])
-        ->name('jeux.commentaire');
-    Route::post('/commentaire/{id}',[CommentaireController::class,'destroy'])
-        ->name('jeux.commentaire');
+
+    Route::get('/{id}', [JeuController::class, 'details'])
+        ->middleware(['auth'])
+        ->name('jeux.details');
 });
 
 
-
-Route::prefix('commentaire')->group(function () {
-    Route::get('/{id}', [JeuController::class, 'index'])
-        ->name('commentaire.store ');
-    Route::get('/{id}', [JeuController::class, 'show'])
-        ->middleware(['auth', 'role:view-salle'])
-        ->name('jeux.show');
-    Route::put('/', [JeuController::class, 'store'])
-        ->middleware(['auth', 'role:edit-salle'])
-        ->name('jeux.update');
-    Route::post('/{id}', [JeuController::class, 'update'])
-        ->name('jeux.store');
-    Route::post('/url/{id}', [JeuController::class, 'updateUrl'])
-        ->name('jeux.updateUrl');
-    Route::delete('/{id}', [JeuController::class, 'destroy'])
-        ->middleware(['auth', 'role:admin'])
-        ->name('jeux.destroy');
-    Route::post('/achat/{id}',[JeuController::class,'achat'])
-        ->name('jeux.achat');
+Route::prefix('commentaires')->group(function () {
+    Route::post('/', [CommentaireController::class, 'store'])
+        ->middleware(['auth'])
+        ->name('commentaires.store ');
+    Route::post('/{id}', [CommentaireController::class, 'update'])
+        ->middleware(['commentaire:commentaire-moderateur,administrateur'])
+        ->name('commentaires.update');
+    Route::post('/{id}', [CommentaireController::class, 'destroy'])
+        ->middleware(['commentaire:commentaire-moderateur,administrateur'])
+        ->name('commentaires.destroy');
 });
+
+

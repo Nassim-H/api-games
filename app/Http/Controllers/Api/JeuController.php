@@ -14,19 +14,23 @@ use App\Models\Jeu;
 use App\Models\Like;
 use App\Models\Theme;
 use http\Client\Curl\User;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class JeuController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $this->authorize('adherent'&&'adherent-premium');
+
         $jeux = Jeu::all();
-        return JeuResource::collection($jeux);
+        return JeuResource::collection($jeux->all());
+
+
     }
 
     public function randomIndex()
@@ -127,20 +131,20 @@ class JeuController extends Controller
         $achat->date_achat = $request->date_achat;
         $achat->lieu_achat = $request->lieu_achat;
         $achat->prix = $request->prix;
-        $achat->user_id = 1;//Auth::user()->$id;
-        $achat->jeu_id= $request->id_jeu;
+        $achat->user_id = Auth::user()->id;
+        $achat->jeu_id= $id;
         $achat->save();
         return response()->json([
             "status"=> "success",
              "message"=> "Purchase created successfully",
              "achat"=>$achat,
-             //"adherent" =>Auth::user()->$id,
+             "adherent" =>Auth::user()->id
             ], 200);
     }
 
-    public function destroyAchat(string $id)
+    public function destroyAchat(string $id_jeu)
     {
-        $achat = Achat::findOrFail($id);
+        $achat = Achat::where('jeu_id', $id_jeu)->first()::where('user_id', Auth::user()->id)->first();
         $achat->delete();
         return response()->json([
             "status"=> "success",
@@ -152,13 +156,15 @@ class JeuController extends Controller
     public function details(string $id)
     {
         $jeu = Jeu::findOrFail($id);
+        $like = Like::where('jeu_id', $id)->first();
+
         return response()->json([
             "status"=> "success",
             "message"=>"Full info of game",
             "achats"=> $jeu->achats,
             "commentaires"=> $jeu->commentaires,
             "jeu"=> $jeu,
-            "nb_likes"=> $jeu->likes->count(),
+            "nb_likes"=> $like->count(),
         ], 200);
 
     }

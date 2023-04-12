@@ -2,7 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EnsureUserHasRole;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,4 +68,12 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => EnsureUserHasRole::class,
     ];
+
+    protected $routeMiddleware = [
+        // ...
+        'essaie' => RoleMiddleware::class,
+        'him'=> \App\Http\Middleware\isHim::class,
+        'premium'=> \App\Http\Middleware\isPremiumOrMore::class,
+        'commentaire'=> \App\Http\Middleware\isAuthorOrAdmin::class,
+        ];
 }

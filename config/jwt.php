@@ -123,7 +123,8 @@ return [
     */
 
     'algo' => env('JWT_ALGO', 'HS256'),
-
+    'blacklist_enabled' => env('JWT_BLACKLIST_ENABLED', true),
+    'blacklist' => Tymon\JWTAuth\Blacklist::class,
     /*
     |--------------------------------------------------------------------------
     | Required Claims
@@ -208,7 +209,6 @@ return [
     |
     */
 
-    'blacklist_enabled' => env('JWT_BLACKLIST_ENABLED', true),
 
     /*
     | -------------------------------------------------------------------------

@@ -14,20 +14,26 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        //
+        $commentaires = Commentaire::all();
+        return response()->json([
+            "status" => "success",
+            "message" => "Comment list",
+            "comment" => $commentaires
+        ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, int $id)
+    public function store(Request $request)
     {
         $commentaire=new Commentaire();
         $commentaire->commentaire = $request->commentaire;
         $commentaire->note = $request->note;
         $commentaire->etat = "public";
-        $commentaire->jeux_id= $id;
-        //$commentaire->user_id = Auth::user()->$id;
+        $commentaire->jeu_id= $request->id_jeu;
+        $commentaire->user_id = Auth::user()->id;
+        $commentaire->save();
         return response()->json([
             "status" => "success",
             "message" => "Comment created successfully",
@@ -50,6 +56,7 @@ class CommentaireController extends Controller
     {
         $commentaire = Commentaire::findOrFail($id);
         $commentaire->update($request->all());
+
         return response()->json([
             'status' => "success",
             'message' => "Comment updated successfully!",

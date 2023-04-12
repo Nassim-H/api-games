@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\AdherentResource;
 use App\Models\Adherent;
 use App\Models\User;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdherentController extends Controller
@@ -26,25 +28,6 @@ class AdherentController extends Controller
      */
     public function store(Request $request)
     {
-        $adherent = new User();
-        $adherent->email = $request->email;
-        $adherent->password = Hash::make($request->password);
-        $adherent->valide = true;
-        $adherent->nom = $request->nom;
-        $adherent->prenom = $request->prenom;
-        $adherent->pseudo = $request->pseudo;
-        $adherent->email_verified_at = now();
-        $adherent->avatar = '../../../../resources/images/avatar1.png';
-        $adherent->save();
-        return response()->json([
-            "status" => "success",
-            "message" => "Adherent created successfully",
-            "adherent" => $adherent,
-            "authorisation" => [
-                "token" => "valeur du token",
-                "type" => "bearer",
-            ]
-        ], 200);
     }
 
     /**
@@ -52,8 +35,10 @@ class AdherentController extends Controller
      */
     public function show(string $id)
     {
-        $adherent= User::findOrFail($id);
-        return new AdherentResource($adherent);
+        $user = User::findOrFail($id);
+
+        return new AdherentResource($user);
+
     }
 
     /**
@@ -61,9 +46,17 @@ class AdherentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+        $adherent = User::findOrFail($id);
+        $adherent->update($request->all());
+        return new AdherentResource($adherent);
     }
 
+
+    public function updateAvatar(Request $request, string $id){
+        $adherent = User::findOrFail($id);
+        $adherent->avatar = $request->avatar;
+        return new AdherentResource($adherent);
+    }
     /**
      * Remove the specified resource from storage.
      */

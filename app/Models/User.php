@@ -56,4 +56,29 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Role::class);
     }
 
+    public function hasAnyRole($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->hasRole($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if ($this->hasRole($roles)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    private function hasRole(mixed $role)
+    {
+        if ($this->roles()->where('nom', $role)->first()) {
+            return true;
+        }
+        return false;
+    }
+
 }
