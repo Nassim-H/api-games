@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::post('adherents', [AdherentController::class, 'store']);
 Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(function(){
     Route::post('register','register');
     Route::post('login','login');
@@ -34,12 +33,27 @@ Route::controller(\App\Http\Controllers\Api\AuthController::class)->group(functi
 
 
 Route::prefix('adherents')->group(function () {
+    /**
+     * @SWG\Get(
+     *     path="/{id}",
+     *     summary="Récupérer le profile d'un adhérent",
+     *     tags={"Adherent"},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Adhérent récupéré avec succès",
+     *
+     *     ),
+     * )
+     */
     Route::get('/{id}', [AdherentController::class, 'show'])
         ->middleware(['him'])
         ->name('adherents.show ');
     Route::put('/{id}', [AdherentController::class, 'update'])
         ->middleware(['him'])
         ->name('adherents.update');
+    Route::post('adherents', [AdherentController::class, 'store'])
+        ->middleware(['essaie:administrateur'])
+        ->name('adherents.store');
     Route::put('/{id}', [AdherentController::class, 'updateAvatar'])
         ->middleware(['him'])
         ->name('adherents.updateAvatar');

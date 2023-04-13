@@ -101,16 +101,20 @@ class JeuController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Renvoie une liste de jeux",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/JeuResource")
-     *         )
+     *
      *     ),
      *     security={{"bearerAuth":{}}}
      * )
-    /**
-     * Display a listing of the resource.
+     * /**
+     * @OA\Info(
+     *   title="My first API",
+     *   version="1.0.0",
+     *   @OA\Contact(
+     *     email="support@example.com"
+     *   )
+     * )
      */
+
     public function index(Request $request)
     {
         $nb_joueurs_min = $request->input('nb_joueurs_min');
@@ -120,8 +124,9 @@ class JeuController extends Controller
         $editeur = $request->input('editeur');
         $theme = $request->input('theme');
         $categorie = $request->input('categorie');
-        $sort = $request->input('sort');
-
+        $sortnom = $request->input('sortNom');
+        $sortage = $request->input('sortAge');
+        $sortduree = $request->input('sortDuree');
 
         // Utiliser la valeur du paramètre dans votre logique de traitement
         if ($nb_joueurs_min) {
@@ -146,9 +151,21 @@ class JeuController extends Controller
         }  if ($categorie) {
             // Si le paramètre n'est pas présent, obtenir tous les jeux
             $jeux = Jeu::where('categorie_id', '=', $categorie)->get();
-        }  if ($sort) {
+        }  if ($sortnom) {
             // Si le paramètre n'est pas présent, obtenir tous les jeux
-            $jeux = Jeu::orderBy('nom', $sort)->get();
+            $jeux = Jeu::orderBy('nom', $sortnom)->get();
+        }
+        if ($sortage) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::orderBy('age_min', $sortage)->get();
+        }
+        if ($sortduree) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::orderBy('duree_partie', $sortduree)->get();
+        }
+        else {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::all();
         }
 
 

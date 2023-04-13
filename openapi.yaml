@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: 'My first API'
+  contact:
+    email: support@example.com
+  version: 1.0.0
+paths:
+  /jeux:
+    get:
+      tags:
+        - Jeux
+      summary: 'Afficher une liste de jeux'
+      operationId: 77f09179f9f3549bb667af605318025b
+      parameters:
+        -
+          name: nb_joueurs_min
+          in: query
+          description: 'Nombre minimum de joueurs'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: nb_joueurs_max
+          in: query
+          description: 'Nombre maximum de joueurs'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: duree
+          in: query
+          description: 'Durée de la partie'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: age
+          in: query
+          description: 'Âge minimum'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: editeur
+          in: query
+          description: "ID de l'éditeur"
+          schema:
+            type: integer
+            format: int32
+        -
+          name: theme
+          in: query
+          description: 'ID du thème'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: categorie
+          in: query
+          description: 'ID de la catégorie'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: sort
+          in: query
+          description: 'Tri par nom (asc ou desc)'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Renvoie une liste de jeux'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JeuResource'
+      security:
+        -
+          bearerAuth: []
