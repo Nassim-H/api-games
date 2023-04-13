@@ -50,7 +50,7 @@ Route::prefix('adherents')->group(function () {
 Route::prefix('jeux')->group(function () {
     Route::get('/random', [JeuController::class, 'randomIndex'])
         ->name('jeux.randomIndex');
-    Route::get('/jeux', [JeuController::class, 'index'])
+    Route::get('/', [JeuController::class, 'index'])
         ->middleware('auth')
         ->name('jeux.index ')
         ->where(['age' =>'[0-9]+', 'duree'=>'[0-9]+', 'nb_joueurs_min'=>'[0-9]+', 'nb_joueurs_max'=>'[0-9]+', 'sort'=>'(asc|desc)', 'categorie'=>'[a-zA-Z0-9]+', 'theme'=>'[a-zA-Z0-9]+', 'editeur'=>'[a-zA-Z0-9]+']);

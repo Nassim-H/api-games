@@ -150,6 +150,9 @@ class JeuController extends Controller
             // Si le paramètre n'est pas présent, obtenir tous les jeux
             $jeux = Jeu::orderBy('nom', $sort)->get();
         }
+        else{
+            $jeux = Jeu::all();
+        }
 
 
 
