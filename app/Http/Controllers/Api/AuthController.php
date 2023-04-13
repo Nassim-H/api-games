@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Achat;
+use App\Models\Commentaire;
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,6 +89,9 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'sucess',
             'adhérent' => Auth::user(),
+            'commentaires' => Commentaire::all()->where('user_id', Auth::user()->id),
+            'achats' => Achat::all()->where('user_id', Auth::user()->id),
+            'likes' => Like::all()->where('user_id', Auth::user()->id)
         ]);
     }
 }

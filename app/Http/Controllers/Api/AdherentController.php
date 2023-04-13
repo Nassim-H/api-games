@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdherentResource;
+use App\Models\Achat;
 use App\Models\Adherent;
+use App\Models\Commentaire;
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Foundation\Http\FormRequest;
@@ -37,7 +40,7 @@ class AdherentController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return new AdherentResource($user);
+        return ["status"=>"success","message"=>"Successfully profil info ","adherent"=>new AdherentResource($user),"commentaires"=>Commentaire::all()->where('user_id', $id),"Achat"=>Achat::all()->where('user_id', $id),"Likes"=>Like::all()->where('user_id', $id)];
 
     }
 
@@ -48,7 +51,7 @@ class AdherentController extends Controller
     {
         $adherent = User::findOrFail($id);
         $adherent->update($request->all());
-        return new AdherentResource($adherent);
+        return ["status"=>"success","message"=>"Adherent updated successfully","adherent"=>new AdherentResource($adherent)];
     }
 
 

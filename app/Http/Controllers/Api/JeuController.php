@@ -46,9 +46,9 @@ class JeuController extends Controller
     {
         // Ici les données ont été validées dans la classe JeuRequest
         $jeu = new Jeu();
-        $editeur = Editeur::where('nom', $request->editeur)->first();
-        $theme = Theme::where('nom', $request->theme)->first();
-        $categorie = Categories::where('nom', $request->categorie)->first();
+        $editeur = Editeur::where('id', $request->editeur)->first();
+        $theme = Theme::where('id', $request->theme)->first();
+        $categorie = Categories::where('id', $request->categorie)->first();
         $jeu->nom = $request->nom;
         $jeu->description = $request->description;
         $jeu->langue = $request->langue;
@@ -83,8 +83,8 @@ class JeuController extends Controller
     public function update(JeuRequest $request, int $id) {
         $jeu = Jeu::findOrFail($id);
         $editeur = Editeur::where('nom', $request->editeur)->first();
-        $theme = Theme::where('nom', $request->theme)->first();
-        $categorie = Categories::where('nom', $request->categorie)->first();
+        $theme = Theme::where('id', $request->theme)->first();
+        $categorie = Categories::where('id', $request->categorie)->first();
         $jeu->nom = $request->nom;
         $jeu->description = $request->description;
         $jeu->langue = $request->langue;

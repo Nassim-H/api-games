@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class isHim
@@ -15,7 +16,7 @@ class isHim
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = $request->user();
+        $user = Auth::user();
         $id = $request->route('id');
         if ($user->id == $id || $user->hasAnyRole('administrateur')) {
             return $next($request);
