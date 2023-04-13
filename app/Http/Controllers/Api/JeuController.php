@@ -153,6 +153,8 @@ class JeuController extends Controller
         ], 200);
     }
 
+
+
     public function details(string $id)
     {
         $jeu = Jeu::findOrFail($id);
@@ -165,6 +167,7 @@ class JeuController extends Controller
             "commentaires"=> $jeu->commentaires,
             "jeu"=> $jeu,
             "nb_likes"=> $like->count(),
+            "note_moyenne" => $jeu->commentaires->avg('note')
         ], 200);
 
     }
