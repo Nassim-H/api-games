@@ -167,6 +167,9 @@ class JeuController extends Controller
             // Si le paramètre n'est pas présent, obtenir tous les jeux
             $jeux = Jeu::all();
         }
+        else{
+            $jeux = Jeu::all();
+        }
 
 
 
