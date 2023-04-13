@@ -128,6 +128,8 @@ class JeuController extends Controller
         $sortage = $request->input('sortAge');
         $sortduree = $request->input('sortDuree');
 
+        $jeux = Jeu::all();
+
         // Utiliser la valeur du paramètre dans votre logique de traitement
         if ($nb_joueurs_min) {
             // Effectuer une requête en utilisant la valeur du paramètre
@@ -137,7 +139,7 @@ class JeuController extends Controller
             $jeux = Jeu::where('nombre_joueurs_max', '=', $nb_joueurs_max)->get();
         }  if ($age) {
             // Si le paramètre n'est pas présent, obtenir tous les jeux
-            $jeux = Jeu::where('age_min', '=', $age)->get();
+            $jeux = Jeu::where('age_min', '>=', $age)->get();
         }
         if ($duree) {
             // Si le paramètre n'est pas présent, obtenir tous les jeux
@@ -163,10 +165,7 @@ class JeuController extends Controller
             // Si le paramètre n'est pas présent, obtenir tous les jeux
             $jeux = Jeu::orderBy('duree_partie', $sortduree)->get();
         }
-        else {
-            // Si le paramètre n'est pas présent, obtenir tous les jeux
-            $jeux = Jeu::all();
-        }
+
 
 
 

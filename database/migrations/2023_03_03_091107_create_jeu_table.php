@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('age_min');
             $table->integer('nombre_joueurs_min');
             $table->integer('nombre_joueurs_max');
-            $table->string('duree_partie');
+            $table->integer('duree_partie');
             $table->boolean('valide')->default(true);
             $table->foreignId('categorie_id')->references('id')->on('categories')
                 ->onUpdate('cascade')
