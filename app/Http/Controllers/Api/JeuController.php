@@ -40,10 +40,10 @@ class JeuController extends Controller
         // Utiliser la valeur du paramètre dans votre logique de traitement
         if ($nb_joueurs_min) {
             // Effectuer une requête en utilisant la valeur du paramètre
-            $jeux = Jeu::where('nb_joueurs_min', '=', $nb_joueurs_min)->get();
+            $jeux = Jeu::where('nombre_joueurs_min', '=', $nb_joueurs_min)->get();
         } else if ($nb_joueurs_max) {
             // Si le paramètre n'est pas présent, obtenir tous les jeux
-            $jeux = Jeu::where('nb_joueurs_max', '=', $nb_joueurs_max)->get();
+            $jeux = Jeu::where('nombre_joueurs_max', '=', $nb_joueurs_max)->get();
         } else if ($duree) {
             // Si le paramètre n'est pas présent, obtenir tous les jeux
             $jeux = Jeu::where('duree_partie', '=', $duree)->get();

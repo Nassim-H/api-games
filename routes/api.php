@@ -53,7 +53,7 @@ Route::prefix('jeux')->group(function () {
     Route::get('/jeux', [JeuController::class, 'index'])
         ->middleware('auth')
         ->name('jeux.index ')
-        ->where(['age' =>'[0-100]+', 'duree'=>'[0-9]+', 'nb_joueurs_min'=>'[0-9]+', 'nb_joueurs_max'=>'[0-9]+', 'sort'=>'(asc|desc)', 'categorie'=>'[0-9]+', 'theme'=>'[a-zA-Z0-9]+', 'editeur'=>'[0-9]+']);
+        ->where(['age' =>'[0-9]+', 'duree'=>'[0-9]+', 'nb_joueurs_min'=>'[0-9]+', 'nb_joueurs_max'=>'[0-9]+', 'sort'=>'(asc|desc)', 'categorie'=>'[0-9]+', 'theme'=>'[a-zA-Z0-9]+', 'editeur'=>'[0-9]+']);
     Route::post('/jeux', [JeuController::class, 'store'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.store');
