@@ -42,7 +42,7 @@ Route::prefix('adherents')->group(function () {
         ->name('adherents.update');
     Route::put('/{id}', [AdherentController::class, 'updateAvatar'])
         ->middleware(['him'])
-        ->name('adherents.update');
+        ->name('adherents.updateAvatar');
 });
 
 
@@ -65,7 +65,7 @@ Route::prefix('jeux')->group(function () {
     Route::post('/achat/{id}', [JeuController::class, 'achat'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.achat');
-    Route::post('/achat/{id}', [JeuController::class, 'destroyAchat'])
+    Route::delete('/achat/{id}', [JeuController::class, 'destroyAchat'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.destroyAchat');
 
@@ -82,7 +82,7 @@ Route::prefix('commentaires')->group(function () {
     Route::post('/{id}', [CommentaireController::class, 'update'])
         ->middleware(['commentaire:commentaire-moderateur,administrateur'])
         ->name('commentaires.update');
-    Route::post('/{id}', [CommentaireController::class, 'destroy'])
+    Route::delete('/{id}', [CommentaireController::class, 'destroy'])
         ->middleware(['commentaire:commentaire-moderateur,administrateur'])
         ->name('commentaires.destroy');
 });

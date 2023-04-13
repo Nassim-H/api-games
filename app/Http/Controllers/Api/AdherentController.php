@@ -58,7 +58,7 @@ class AdherentController extends Controller
     public function updateAvatar(Request $request, string $id){
         $adherent = User::findOrFail($id);
         $adherent->avatar = $request->avatar;
-        return new AdherentResource($adherent);
+        return ["status"=>"success","message"=>"Adherent url updated successfully","url"=>$adherent->avatar];
     }
     /**
      * Remove the specified resource from storage.

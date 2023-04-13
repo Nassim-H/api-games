@@ -16,6 +16,9 @@ class isHim
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(!Auth::check()) {
+            return response()->json(['error' => 'Forbidden' ], 403);
+        }
         $user = Auth::user();
         $id = $request->route('id');
         if ($user->id == $id || $user->hasAnyRole('administrateur')) {

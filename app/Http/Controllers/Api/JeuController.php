@@ -138,7 +138,7 @@ class JeuController extends Controller
             "status"=> "success",
              "message"=> "Purchase created successfully",
              "achat"=>$achat,
-             "adherent" =>Auth::user()->id
+            'adherent' => User::all()->where('id', Auth::user()->id),
             ], 200);
     }
 
@@ -163,10 +163,9 @@ class JeuController extends Controller
         return response()->json([
             "status"=> "success",
             "message"=>"Full info of game",
-            "achats"=> $jeu->achats,
-            "commentaires"=> $jeu->commentaires,
             "jeu"=> $jeu,
-            "nb_likes"=> $like->count(),
+            "achats"=> Achat::all()->where('jeu_id', $id),
+            "nb_likes"=> $like->count()??0,
             "note_moyenne" => $jeu->commentaires->avg('note')
         ], 200);
 
