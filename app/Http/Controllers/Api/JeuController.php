@@ -17,6 +17,7 @@ use http\Client\Curl\User;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Routing\Matcher\RedirectableUrlMatcher;
 
 class JeuController extends Controller
 {
@@ -24,12 +25,53 @@ class JeuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $nb_joueurs_min = $request->input('nb_joueurs_min');
+        $nb_joueurs_max = $request->input('nb_joueurs_max');
+        $duree = $request->input('duree');
+        $age = $request->input('age');
+        $editeur = $request->input('editeur');
+        $theme = $request->input('theme');
+        $categorie = $request->input('categorie');
+        $sort = $request->input('sort');
 
-        $jeux = Jeu::all();
+
+        // Utiliser la valeur du paramètre dans votre logique de traitement
+        if ($nb_joueurs_min) {
+            // Effectuer une requête en utilisant la valeur du paramètre
+            $jeux = Jeu::where('nb_joueurs_min', '=', $nb_joueurs_min)->get();
+        } else if ($nb_joueurs_max) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::where('nb_joueurs_max', '=', $nb_joueurs_max)->get();
+        } else if ($duree) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::where('duree_partie', '=', $duree)->get();
+        } else if ($age) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::where('age_min', '=', $age)->get();
+        } else if ($editeur) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::where('editeur_id', '=', $editeur)->get();
+        } else if ($theme) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::where('theme_id', '=', $theme)->get();
+        } else if ($categorie) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::where('categorie_id', '=', $categorie)->get();
+        } else if ($sort) {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::orderBy('nom', $sort)->get();
+        }
+
+
+        else {
+            // Si le paramètre n'est pas présent, obtenir tous les jeux
+            $jeux = Jeu::all();
+        }
+
+        // Retourner la collection de jeux en utilisant la ressource JeuResource
         return JeuResource::collection($jeux->all());
-
 
     }
 

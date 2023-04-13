@@ -37,7 +37,7 @@ Route::prefix('adherents')->group(function () {
     Route::get('/{id}', [AdherentController::class, 'show'])
         ->middleware(['him'])
         ->name('adherents.show ');
-    Route::post('/{id}', [AdherentController::class, 'update'])
+    Route::put('/{id}', [AdherentController::class, 'update'])
         ->middleware(['him'])
         ->name('adherents.update');
     Route::put('/{id}', [AdherentController::class, 'updateAvatar'])
@@ -52,14 +52,15 @@ Route::prefix('jeux')->group(function () {
         ->name('jeux.randomIndex');
     Route::get('/jeux', [JeuController::class, 'index'])
         ->middleware('auth')
-        ->name('jeux.index ');
+        ->name('jeux.index ')
+        ->where(['age' =>'[0-100]+', 'duree'=>'[0-9]+', 'nb_joueurs_min'=>'[0-9]+', 'nb_joueurs_max'=>'[0-9]+', 'sort'=>'(asc|desc)', 'categorie'=>'[0-9]+', 'theme'=>'[a-zA-Z0-9]+', 'editeur'=>'[0-9]+']);
     Route::post('/jeux', [JeuController::class, 'store'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.store');
-    Route::post('/{id}', [JeuController::class, 'update'])
+    Route::put('/{id}', [JeuController::class, 'update'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.update');
-    Route::post('/{id}', [JeuController::class, 'updateUrl'])
+    Route::put('/{id}', [JeuController::class, 'updateUrl'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.updateUrl');
     Route::post('/achat/{id}', [JeuController::class, 'achat'])
@@ -79,7 +80,7 @@ Route::prefix('commentaires')->group(function () {
     Route::post('/', [CommentaireController::class, 'store'])
         ->middleware(['auth'])
         ->name('commentaires.store ');
-    Route::post('/{id}', [CommentaireController::class, 'update'])
+    Route::put('/{id}', [CommentaireController::class, 'update'])
         ->middleware(['commentaire:commentaire-moderateur,administrateur'])
         ->name('commentaires.update');
     Route::delete('/{id}', [CommentaireController::class, 'destroy'])
