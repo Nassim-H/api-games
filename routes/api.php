@@ -77,6 +77,10 @@ Route::prefix('jeux')->group(function () {
     Route::get('/prix_achat_moyen/{id}', [JeuController::class, 'prix_moyen'])
         ->middleware(['auth'])
         ->name('jeux.prix_moyen');
+
+    Route::get('/{id}/commentaires', [JeuController::class, 'commentaire_jeu'])
+        ->middleware(['auth'])
+        ->name('jeux.commentaire_jeu');
 });
 
 

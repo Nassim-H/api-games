@@ -305,4 +305,13 @@ class JeuController extends Controller
             "prix_moyen"=> $prix_moyen,
         ], 200);
     }
+
+    public function commentaire_jeu($id){
+        $commentaires = Commentaire::all()->where('jeu_id', $id);
+        return response()->json([
+            "status"=> "success",
+            "message"=>"Commentaires du jeu",
+            "commentaires"=> $commentaires,
+        ], 200);
+    }
 }
