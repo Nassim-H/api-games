@@ -1,6 +1,6 @@
 # Énoncé de la SAÉ S4.A.01 Développement d'application
  
-L’objectif de cette SAÉ (=projet en groupe. Vocabulaire faisant partie du référentiel du [B.U.T Informatique](https://www.but-genie-mecanique.fr/sae/))
+L’objectif de cette SAÉ (=projet en groupe. Vocabulaire faisant partie du référentiel du [B.U.T Informatique](https://www.but-genie-mecanique.fr/sae/){:target="_blank"})
 ) sera de réaliser un site de gestion d’une ludothèque. Il sera possible de consulter la collection de jeux, regarder les jeux de la base de données, ajouter le dernier jeu acheté, …
 
 La première phase concernera la mise en place d’un back-end qui s’appuiera sur un serveur Restful API.
