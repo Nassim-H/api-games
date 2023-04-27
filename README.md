@@ -4,6 +4,16 @@ L’objectif de cette SAÉ (=projet en groupe. Vocabulaire faisant partie du ré
 
 La première phase concernera la mise en place d’un back-end qui s’appuiera sur un serveur Restful API.
 
+
+# Installation
+Afin de pouvoir lancer le serveur, il faut premièrement lancer la commande :
+`composer install`
+ensuite il est possible de lancer la commande
+`php artisan serve`
+
+Afin de voir les résultats des requêtes vous pouvez utiliser le fichier resquests_example.json dans le dossier Insomnia.
+
+
 ## Introduction
 
 Pour bâtir notre serveur Restful API, nous allons utiliser le cadriciel Laravel. Comme la notion du rôle de visiteur du site sera omniprésente, il est important d’aborder rapidement la couche identification, authentification et gestion des droits d’accès. Dans les sections suivantes les droits en fonction du rôle de l’utilisateur vous seront précisés.
