@@ -35,7 +35,7 @@ class AuthController extends Controller
             'valide' => 1,
             'avatar' => 'cc'
         ]);
-        $user->roles()->attach(([2]));
+        $user->roles()->attach(([3]));
 
 
         $token = Auth::login($user);

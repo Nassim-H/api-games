@@ -74,7 +74,7 @@ Route::prefix('jeux')->group(function () {
     Route::put('/{id}', [JeuController::class, 'update'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.update');
-    Route::put('/{id}', [JeuController::class, 'updateUrl'])
+    Route::put('/url/{id}', [JeuController::class, 'updateUrl'])
         ->middleware(['essaie:adherent-premium,commentaire-moderateur,administrateur'])
         ->name('jeux.updateUrl');
     Route::post('/achat/{id}', [JeuController::class, 'achat'])

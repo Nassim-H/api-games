@@ -13,7 +13,7 @@ use App\Models\Editeur;
 use App\Models\Jeu;
 use App\Models\Like;
 use App\Models\Theme;
-use http\Client\Curl\User;
+use App\Models\User;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,98 +22,6 @@ use Symfony\Component\Routing\Matcher\RedirectableUrlMatcher;
 class JeuController extends Controller
 {
 
-    /**
-     * @OA\Get(
-     *     path="/jeux",
-     *     summary="Afficher une liste de jeux",
-     *     tags={"Jeux"},
-     *     @OA\Parameter(
-     *         name="nb_joueurs_min",
-     *         in="query",
-     *         description="Nombre minimum de joueurs",
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="nb_joueurs_max",
-     *         in="query",
-     *         description="Nombre maximum de joueurs",
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="duree",
-     *         in="query",
-     *         description="Durée de la partie",
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="age",
-     *         in="query",
-     *         description="Âge minimum",
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="editeur",
-     *         in="query",
-     *         description="ID de l'éditeur",
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="theme",
-     *         in="query",
-     *         description="ID du thème",
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="categorie",
-     *         in="query",
-     *         description="ID de la catégorie",
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         name="sort",
-     *         in="query",
-     *         description="Tri par nom (asc ou desc)",
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Renvoie une liste de jeux",
-     *
-     *     ),
-     *     security={{"bearerAuth":{}}}
-     * )
-     * /**
-     * @OA\Info(
-     *   title="My first API",
-     *   version="1.0.0",
-     *   @OA\Contact(
-     *     email="support@example.com"
-     *   )
-     * )
-     */
 
     public function index(Request $request)
     {
@@ -174,9 +82,11 @@ class JeuController extends Controller
 
     }
 
+
+
     public function randomIndex()
     {
-        $jeux = Jeu::all()->random(10);
+        $jeux = Jeu::all()->random(5);
         return JeuResource::collection($jeux);
     }
 
@@ -223,7 +133,7 @@ class JeuController extends Controller
      */
     public function update(JeuRequest $request, int $id) {
         $jeu = Jeu::findOrFail($id);
-        $editeur = Editeur::where('nom', $request->editeur)->first();
+        $editeur = Editeur::where('id', $request->editeur)->first();
         $theme = Theme::where('id', $request->theme)->first();
         $categorie = Categories::where('id', $request->categorie)->first();
         $jeu->nom = $request->nom;

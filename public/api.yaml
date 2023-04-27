@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  title: 'My first API'
+  contact:
+    email: support@example.com
+  version: 1.0.0
+paths:
+  /jeux:
+    get:
+      tags:
+        - Jeux
+      summary: 'Afficher une liste de jeux'
+      operationId: 77f09179f9f3549bb667af605318025b
+      parameters:
+        -
+          name: nb_joueurs_min
+          in: query
+          description: 'Nombre minimum de joueurs'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: nb_joueurs_max
+          in: query
+          description: 'Nombre maximum de joueurs'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: duree
+          in: query
+          description: 'Durée de la partie'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: age
+          in: query
+          description: 'Âge minimum'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: editeur
+          in: query
+          description: "ID de l'éditeur"
+          schema:
+            type: integer
+            format: int32
+        -
+          name: theme
+          in: query
+          description: 'ID du thème'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: categorie
+          in: query
+          description: 'ID de la catégorie'
+          schema:
+            type: integer
+            format: int32
+        -
+          name: sort
+          in: query
+          description: 'Tri par nom (asc ou desc)'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Renvoie une liste de jeux'
+      security:
+        -
+          bearerAuth: []
+  /api/jeux/random:
+    get:
+      tags:
+        - Jeux
+      summary: 'Obtenir une liste de jeux aléatoires'
+      description: 'Récupère une liste de 10 jeux aléatoires à partir de la collection de jeux.'
+      operationId: 1cf945cb52bce608d44b0fc1b191f5b4
+      responses:
+        '200':
+          description: 'Liste de jeux aléatoires'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JeuResource'
+        '500':
+          description: 'Erreur serveur'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'Erreur serveur lors de la récupération des jeux.' }
+                type: object
+  '/api/games/{id}/purchase':
+    post:
+      tags:
+        - Games
+      summary: 'Create a new purchase for a game by ID'
+      operationId: acc1d9051b124fe6ce2bacccdbcc9513
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of the game'
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                date_achat:
+                  type: string
+                  format: date
+                  example: '2023-04-13'
+                lieu_achat:
+                  type: string
+                  example: 'Game Store'
+                prix:
+                  type: number
+                  format: float
+                  example: 19.99
+              type: object
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { type: string, example: success }
+                  message: { type: string, example: 'Purchase created successfully' }
+                  achat: { $ref: '#/components/schemas/Achat' }
+                  adherent: { $ref: '#/components/schemas/User' }
+                type: object
+        '400':
+          description: 'Bad Request'
+        '404':
+          description: 'Game not found'
+        '500':
+          description: 'Internal Server Error'
+  '/api/purchases/{id_jeu}':
+    delete:
+      tags:
+        - Purchases
+      summary: 'Delete a purchase for a game by ID'
+      operationId: 6560f8d832d70775b247df3619fe34c4
+      parameters:
+        -
+          name: id_jeu
+          in: path
+          description: 'ID of the game'
+          required: true
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { type: string, example: success }
+                  message: { type: string, example: 'Purchase deleted successfully' }
+                  achat: { $ref: '#/components/schemas/Achat' }
+                type: object
+        '404':
+          description: 'Purchase not found'
+        '500':
+          description: 'Internal Server Error'
+  '/api/games/{id}':
+    get:
+      tags:
+        - Games
+      summary: 'Get details of a game by ID'
+      operationId: dd8717ebd2551022617d2910a5aa3ab9
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of the game'
+          required: true
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { type: string, example: success }
+                  message: { type: string, example: 'Full info of game' }
+                  jeu: { $ref: '#/components/schemas/Jeu' }
+                  achats: { type: array, items: { $ref: '#/components/schemas/Achat' } }
+                  nb_likes: { type: integer, example: '5' }
+                  note_moyenne: { type: number, format: float, example: '4.5' }
+                type: object
+        '404':
+          description: 'Game not found'
+        '500':
+          description: 'Internal Server Error'
+  '/api/games/{id}/prix_moyen':
+    get:
+      tags:
+        - Games
+      summary: 'Get average price of a game by ID'
+      operationId: e8712bc86bd01c3a5a0c3c653acc77f3
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of the game'
+          required: true
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                properties:
+                  status: { type: string, example: success }
+                  message: { type: string, example: 'Prix moyen' }
+                  prix_moyen: { type: number, format: float, example: '29.99' }
+                type: object
+        '404':
+          description: 'Game not found'
+        '500':
+          description: 'Internal Server Error'
